@@ -15,6 +15,7 @@ class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = "__all__"
+        extra_kwargs = {"password": {"read_only": True}, "author": {"required": False}}
 
     def __str__(self):
         return f"{self.title} - {self.completed}"
