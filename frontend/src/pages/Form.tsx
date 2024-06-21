@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useNavigate } from "react-router-dom";
 
-interface FormInterface{
+interface FormInterface {
     method: "LOGIN" | "REGISTER"
 }
 const Form = (props: FormInterface) => {
-    const {method} = props;
+    const { method } = props;
+    const navigate = useNavigate();
 
     const handleLogin = () => {
 
@@ -21,11 +23,28 @@ const Form = (props: FormInterface) => {
                 {method === "LOGIN" ? "Login form" : "Register Form"}
             </h1>
             <form action="">
-                <Input type="email" className="my-4" placeholder="Email" required/>
-                <Input type="password" className="mb-2" placeholder="Password" required/>
-                {method === "LOGIN" 
-                    ? <Button className="mt-8 mx-auto block" onClick={handleLogin}>Login</Button> 
+                <Input type="email" className="my-4" placeholder="Email" required />
+                <Input type="password" className="mb-2" placeholder="Password" required />
+                {method === "LOGIN"
+                    ? <Button className="mt-8 mx-auto block" onClick={handleLogin}>Login</Button>
                     : <Button className="mt-8 mx-auto block" onClick={handleRegister}>Register</Button>}
+                {/* <small className="text-sm font-medium leading-none">
+                        ? "New? Please register"
+                        : "Already user? Please login" }
+                        </small> */}
+                {method === "LOGIN"
+                    ? <p className="text-sm text-muted-foreground leading-7 [&:not(:first-child)]:mt-6">
+                        Don't have an account?
+                        <small
+                            onClick={() => navigate("/register")} 
+                            className="text-sm font-medium leading-none ml-2 text-black tracking-wider hover:underline cursor-pointer">Sign up</small>
+                    </p>
+                    : <p className="text-sm text-muted-foreground leading-7 [&:not(:first-child)]:mt-6">
+                        Have an account?
+                        <small 
+                            onClick={() => navigate("/login")} 
+                            className="text-sm font-medium leading-none ml-2 text-black tracking-wider hover:underline cursor-pointer">Log in</small>
+                    </p>}
             </form>
         </div>
     )

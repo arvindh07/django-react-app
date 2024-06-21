@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Outlet, useNavigate } from "react-router-dom";
 
 const AuthRoute = () => {
-    const [isAuthenticated, setAuthenticated] = useState(true);
+    const [isAuthenticated, setAuthenticated] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
