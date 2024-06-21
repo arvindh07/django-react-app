@@ -1,4 +1,4 @@
-import { loginHandler } from "@/API/auth";
+import { loginHandler, registerHandler } from "@/API/auth";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useState } from "react";
@@ -34,7 +34,7 @@ const Form = (props: FormInterface) => {
     const handleRegister = async (e: any) => {
         e.preventDefault();
         const formData = {username, password};
-        const response = await loginHandler(formData);
+        const response = await registerHandler(formData);
         if(response.status === "OK"){
             toast({
                 title: "Account created successfully"
