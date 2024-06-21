@@ -1,10 +1,9 @@
-import { Button } from "@/components/ui/button";
+import Form from "./pages/Form";
 
 function App() {
   return (
     <>
-      <h1>hello world</h1>
-      <Button>Click me</Button>
+      <Form method={"REGISTER"} />
     </>
   )
 }
