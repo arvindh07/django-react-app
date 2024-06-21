@@ -3,6 +3,7 @@ import AuthRoute from "./pages/AuthRoute";
 import Form from "./pages/Form";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
+import { Toaster } from "@/components/ui/toaster"
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
+      <Toaster />
     </>
   )
 }

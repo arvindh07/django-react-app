@@ -1,6 +1,9 @@
+import { loginHandler } from "@/API/auth";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast"
 
 interface FormInterface {
     method: "LOGIN" | "REGISTER"
@@ -8,13 +11,40 @@ interface FormInterface {
 const Form = (props: FormInterface) => {
     const { method } = props;
     const navigate = useNavigate();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const { toast } = useToast()
 
-    const handleLogin = () => {
-
+    const handleLogin = async (e: any) => {
+        e.preventDefault()
+        const formData = {username, password};
+        const response = await loginHandler(formData);
+        if(response.status === "OK"){
+            toast({
+                title: "Login Successful"
+            })
+        } else{
+            toast({
+                title: "Login Failed",
+                description: response.error
+            })
+        }
     }
 
-    const handleRegister = () => {
-
+    const handleRegister = async (e: any) => {
+        e.preventDefault();
+        const formData = {username, password};
+        const response = await loginHandler(formData);
+        if(response.status === "OK"){
+            toast({
+                title: "Account created successfully"
+            })
+        } else{
+            toast({
+                title: "Registration Failed",
+                description: response.error
+            })
+        }
     }
 
     return (
@@ -23,15 +53,11 @@ const Form = (props: FormInterface) => {
                 {method === "LOGIN" ? "Login form" : "Register Form"}
             </h1>
             <form action="">
-                <Input type="email" className="my-4" placeholder="Email" required />
-                <Input type="password" className="mb-2" placeholder="Password" required />
+                <Input type="text" className="my-4" placeholder="Username" required onChange={(e) => setUsername(e.target.value)}/>
+                <Input type="password" className="mb-2" placeholder="Password" required onChange={(e) => setPassword(e.target.value)}/>
                 {method === "LOGIN"
                     ? <Button className="mt-8 mx-auto block" onClick={handleLogin}>Login</Button>
                     : <Button className="mt-8 mx-auto block" onClick={handleRegister}>Register</Button>}
-                {/* <small className="text-sm font-medium leading-none">
-                        ? "New? Please register"
-                        : "Already user? Please login" }
-                        </small> */}
                 {method === "LOGIN"
                     ? <p className="text-sm text-muted-foreground leading-7 [&:not(:first-child)]:mt-6">
                         Don't have an account?
