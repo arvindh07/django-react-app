@@ -4,7 +4,7 @@ __pycache__/
 
 ./venv/
 Learning.md
-./backend/db.sqlite3
+backend/db.sqlite3
 ./backend/apis/migrations
 # C extensions
 *.so
