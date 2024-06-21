@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom"
 import AddNote from "./AddNote";
 import { useEffect, useState } from "react";
 import { getNotes } from "@/API/note";
+import NoteCard from "./NoteCard";
+import Loader from "./Loader";
 
 const Home = () => {
   const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -14,8 +17,10 @@ const Home = () => {
     return;
   }
 
-  const handlegetNotes = async() => {
+  const handlegetNotes = async () => {
+    setLoading(true);
     const response = await getNotes();
+    setLoading(false);
     setNotes(response.data);
   }
 
@@ -24,20 +29,25 @@ const Home = () => {
   }, [])
 
   return (
-    <div>
-      <div className="bg-crimson w-11/12 p-4">
-        <Button className="ml-auto block" onClick={handleLogout}>Logout</Button>
-        {notes?.length > 0 && notes?.map(({title, description}) => {
-          return (
-            <>
-              <h1>{title}</h1>  
-              <p>{description}</p>
-            </>
-          )
-        })}
-      </div>
-      <AddNote setNotes={setNotes} />
-    </div>
+    <>
+      {loading
+        ? <Loader />
+        : (
+          <div>
+            <div className="bg-crimson w-11/12 p-4 mx-auto">
+              <Button className="ml-auto block" onClick={handleLogout}>Logout</Button>
+              <AddNote handlegetNotes={handlegetNotes} />
+              <div className="flex gap-4 mt-6 flex-wrap">
+                {notes?.length > 0 && notes?.map((note: any) => {
+                  return (
+                    <NoteCard key={note?.title} note={note} />
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+    </>
   )
 }
 

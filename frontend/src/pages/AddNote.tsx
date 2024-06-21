@@ -2,13 +2,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { Textarea } from "@/components/ui/textarea"
-import { useNavigate } from "react-router-dom"
 import Loader from "./Loader"
 import { useToast } from "@/components/ui/use-toast"
 import { addNoteHandler } from "@/API/note"
 
 const AddNote = (props: any) => {
-    const { setNotes } = props;
+    const { handlegetNotes } = props;
     const [note, setNote] = useState({
         title: "",
         description: ""
@@ -39,7 +38,7 @@ const AddNote = (props: any) => {
                 description: response.error
             })
         }
-        setNotes((prev: any) => [note, ...prev])
+        handlegetNotes();
         setNote({
             title: "",
             description: ""
