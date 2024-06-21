@@ -31,9 +31,6 @@ const NoteCard = (props: any) => {
             <CardContent>
                 <p>{note?.description}</p>
             </CardContent>
-            <CardFooter>
-                <p>Card Footer</p>
-            </CardFooter>
         </Card>
     )
 }

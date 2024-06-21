@@ -37,7 +37,7 @@ const Home = () => {
             <div className="bg-crimson w-11/12 p-4 mx-auto">
               <Button className="ml-auto block" onClick={handleLogout}>Logout</Button>
               <AddNote handlegetNotes={handlegetNotes} />
-              <div className="flex gap-4 mt-6 flex-wrap">
+              <div className="flex gap-4 mt-6 flex-wrap justify-center">
                 {notes?.length > 0 && notes?.map((note: any) => {
                   return (
                     <NoteCard key={note?.title} note={note} />
