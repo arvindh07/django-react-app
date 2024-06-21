@@ -22,7 +22,7 @@ export const loginHandler = async (formData: FormInput) => {
         const apiResponse = await axiosInstance.post(LOGIN, {
             ...formData
         })
-        if (apiResponse.status === 200) {
+        if (apiResponse.status >= 200 && apiResponse.status < 400) {
             response.data = apiResponse.data;
             response.status = "OK";
         } else {
@@ -46,14 +46,15 @@ export const registerHandler = async (formData: FormInput) => {
         const apiResponse = await axiosInstance.post(REGISTER, {
             ...formData
         })
-        if (apiResponse.status === 200) {
+        
+        if (apiResponse.status >= 200 && apiResponse.status < 400) {
             response.data = apiResponse.data;
             response.status = "OK";
         } else {
             response.error = "wrong status code"
         }
     } catch (err: any) {
-        response.error = err.message;
+        response.error = err.response.data?.username?.[0] ? err.response.data.username[0]: err.message;
     } finally {
         return response;
     }
