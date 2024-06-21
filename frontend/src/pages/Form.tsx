@@ -23,12 +23,18 @@ const Form = (props: FormInterface) => {
             toast({
                 title: "Login Successful"
             })
+            localStorage.setItem("accessToken", response.data?.access)
+            localStorage.setItem("refreshToken", response.data?.refresh)
+            navigate("/");
         } else{
+            localStorage.clear();
             toast({
                 title: "Login Failed",
                 description: response.error
             })
         }
+        setUsername("")
+        setPassword("")
     }
 
     const handleRegister = async (e: any) => {
@@ -39,12 +45,15 @@ const Form = (props: FormInterface) => {
             toast({
                 title: "Account created successfully"
             })
+            navigate("/login");
         } else{
             toast({
                 title: "Registration Failed",
                 description: response.error
             })
         }
+        setUsername("")
+        setPassword("")
     }
 
     return (
@@ -53,8 +62,8 @@ const Form = (props: FormInterface) => {
                 {method === "LOGIN" ? "Login form" : "Register Form"}
             </h1>
             <form action="">
-                <Input type="text" className="my-4" placeholder="Username" required onChange={(e) => setUsername(e.target.value)}/>
-                <Input type="password" className="mb-2" placeholder="Password" required onChange={(e) => setPassword(e.target.value)}/>
+                <Input type="text" value={username} className="my-4" placeholder="Username" required onChange={(e) => setUsername(e.target.value)}/>
+                <Input type="password" value={password} className="mb-2" placeholder="Password" required onChange={(e) => setPassword(e.target.value)}/>
                 {method === "LOGIN"
                     ? <Button className="mt-8 mx-auto block" onClick={handleLogin}>Login</Button>
                     : <Button className="mt-8 mx-auto block" onClick={handleRegister}>Register</Button>}

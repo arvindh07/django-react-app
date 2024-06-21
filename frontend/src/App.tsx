@@ -18,11 +18,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Form method="LOGIN" />
+    element: <Form key="login" method="LOGIN" />
   },
   {
     path: "/register",
-    element: <Form method="REGISTER" />
+    element: <Form key="register" method="REGISTER" />
   },
   {
     path: "*",

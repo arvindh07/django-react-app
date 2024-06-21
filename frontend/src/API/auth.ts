@@ -6,7 +6,7 @@ interface FormInput {
     password: string;
 }
 interface ResponseInterface {
-    data: Object;
+    data: Object | any;
     error: string;
     status: "OK" | "NOT OK"
 }
@@ -29,7 +29,7 @@ export const loginHandler = async (formData: FormInput) => {
             response.error = "wrong status code"
         }
     } catch (err: any) {
-        response.error = err.message;
+        response.error = err.response?.data?.detail ? "Invalid credentials" : err.message;
     } finally {
         return response;
     }
