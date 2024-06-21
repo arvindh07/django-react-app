@@ -1,17 +1,13 @@
-import axiosInstance from "./axios"
-import { LOGIN, REGISTER } from "./endpoints"
+import { ResponseInterface } from "./auth";
+import axiosInstance from "./axios";
+import { NOTE } from "./endpoints";
 
-interface FormInput {
-    username: string;
-    password: string;
-}
-export interface ResponseInterface {
-    data: Object | any;
-    error: string;
-    status: "OK" | "NOT OK"
+interface NoteInput{
+    title: string;
+    description: string;
 }
 
-export const loginHandler = async (formData: FormInput) => {
+export const addNoteHandler = async (formData: NoteInput) => {
     let response: ResponseInterface = {
         data: {},
         error: "",
@@ -19,7 +15,7 @@ export const loginHandler = async (formData: FormInput) => {
     };
 
     try {
-        const apiResponse = await axiosInstance.post(LOGIN, {
+        const apiResponse = await axiosInstance.post(NOTE, {
             ...formData
         })
         if (apiResponse.status >= 200 && apiResponse.status < 400) {
@@ -29,13 +25,14 @@ export const loginHandler = async (formData: FormInput) => {
             response.error = "wrong status code"
         }
     } catch (err: any) {
+        console.log("err catch", err);
         response.error = err.response?.data?.detail ? "Invalid credentials" : err.message;
     } finally {
         return response;
     }
 }
 
-export const registerHandler = async (formData: FormInput) => {
+export const getNotes = async () => {
     let response: ResponseInterface = {
         data: {},
         error: "",
@@ -43,10 +40,7 @@ export const registerHandler = async (formData: FormInput) => {
     };
 
     try {
-        const apiResponse = await axiosInstance.post(REGISTER, {
-            ...formData
-        })
-        
+        const apiResponse = await axiosInstance.get(NOTE);
         if (apiResponse.status >= 200 && apiResponse.status < 400) {
             response.data = apiResponse.data;
             response.status = "OK";
@@ -54,7 +48,8 @@ export const registerHandler = async (formData: FormInput) => {
             response.error = "wrong status code"
         }
     } catch (err: any) {
-        response.error = err.response.data?.username?.[0] ? err.response.data.username[0]: err.message;
+        console.log("err catch", err);
+        response.error = err.response?.data?.detail ? "Invalid credentials" : err.message;
     } finally {
         return response;
     }
