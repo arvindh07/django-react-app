@@ -31,7 +31,9 @@ SECRET_KEY = 'django-insecure-bn=qq33w&0y8))*ii(@i&o+l6-89$yt&#o^7n6_&lwja5$akjl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "django-be.onrender.com"
+]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
